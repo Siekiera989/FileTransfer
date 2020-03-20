@@ -6,6 +6,7 @@ using FileTransferApi.Interface;
 using FileTransferApi.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,10 +29,6 @@ namespace FileTransferApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<IFileService,FileService>();
-            services.Configure<IISOptions>(opt =>
-            {
-                opt.AutomaticAuthentication = false;
-            });
         }
 
         
@@ -41,8 +38,12 @@ namespace FileTransferApi
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseMvc();
+            app.Run(async (context) =>
+                {
+                    await context.Response
+                        .WriteAsync(System.Diagnostics.Process.GetCurrentProcess().ProcessName);
+                });
         }
     }
 }

@@ -6,4 +6,8 @@
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FileTransferApi\FileTransferApi.csproj" />
+  </ItemGroup>
+
 </Project>
